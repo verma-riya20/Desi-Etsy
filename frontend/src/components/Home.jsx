@@ -16,9 +16,9 @@ const Home = () => {
         <nav className="hidden md:flex space-x-6 text-sm uppercase font-medium">
             <a href="#">Home</a>
             <a href="#">Sellers</a>
-            <a href="#">Marketplace</a>
+            <a href="#">Products</a>
             <a href="#">About</a>
-            <a href="#">Contact</a>
+            <a href="/admin">Admin</a>
         </nav>
         <div className="flex items-center space-x-4">
             <Search className="w-5 h-5" />

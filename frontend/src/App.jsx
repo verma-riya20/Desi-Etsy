@@ -3,7 +3,9 @@ import { BrowserRouter,Routes,Route } from "react-router-dom";
 import './index.css'; // This should match your CSS file name
 
 import Home from "./components/Home.jsx";
-
+import Signup from "./components/Signup.jsx";
+import Login from "./components/Login.jsx";
+import AdminDashboard from "./components/AdminPanel/AdminDashboard.jsx";
 const App=()=>{
     return(
         <div>
@@ -11,6 +13,7 @@ const App=()=>{
             
             <Routes>
                 <Route path="/" element={<Home/>}></Route>
+                <Route path="/admin" element={<AdminDashboard/>}></Route>
                
             </Routes>
             </BrowserRouter>

@@ -1,0 +1,35 @@
+/* Nav.css */
+
+.navbar {
+    background-color: black;  /* Set background to black */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.navbar-title {
+    color: white;  /* Set title color to white */
+    margin: 0;
+    font-size: 24px;
+}
+
+.nav-links {
+    list-style-type: none;  /* Remove list styling */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;  /* Space out the items */
+}
+
+.nav-item {
+    color: white;  /* Set link color to white */
+    text-decoration: none;  /* Remove underline */
+    font-size: 18px;
+    padding: 5px 10px;
+    transition: color 0.3s ease;
+}
+
+.nav-item:hover {
+    color: #f0f0f0;  /* Slight color change on hover for better UX */
+}

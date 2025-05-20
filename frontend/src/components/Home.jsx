@@ -77,7 +77,7 @@ const Home = () => {
          
           <div className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
             <div className="bg-white p-4 border rounded-md shadow-sm flex-1">
-              <h3 className="text-sm font-semibold mb-1">Become a Seller</h3>
+              <h3 className="text-sm font-semibold mb-1"><a href="/seller">Become a seller</a></h3>
               <p className="text-xs text-gray-600">
                 Share your handmade creations with a wider audience and grow your
                 small business with zero hassle.

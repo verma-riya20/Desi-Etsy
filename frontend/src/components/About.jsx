@@ -1,4 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { Search, ShoppingCart, Menu } from 'lucide-react';  // Add these imports if you're using them in the navbar
+import img from "/public/img.jpg";
 
 const About = () => {
   return (
@@ -67,7 +70,7 @@ const About = () => {
           {/* Image Section */}
           <div>
             <img
-              src="/images/about-banner.jpg" // Add an image of artisans working or a banner related to handmade crafts
+              src={img} // Add an image of artisans working or a banner related to handmade crafts
               alt="Artisan Crafting"
               className="w-full rounded-lg shadow-lg"
             />

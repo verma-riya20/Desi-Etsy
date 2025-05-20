@@ -1,5 +1,6 @@
 import React from "react";
 import { Menu, ShoppingCart, Search } from "lucide-react";
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   return (
@@ -17,16 +18,19 @@ const Home = () => {
             <a href="#">Home</a>
             <a href="#">Sellers</a>
             <a href="#">Products</a>
-            <a href="#">About</a>
+            <Link to="/About">About</Link>
             <a href="/admin">Admin</a>
+            <a href="/Login">login</a>
         </nav>
         <div className="flex items-center space-x-4">
             <Search className="w-5 h-5" />
             <ShoppingCart className="w-5 h-5" />
             <Menu className="md:hidden w-5 h-5" />
+            <Link to="Signup">
             <button className="ml-4 px-4 py-1 border border-gray-900 text-sm font-medium hover:bg-gray-900 hover:text-white transition">
                 SignUp
             </button>
+            </Link>
         </div>
     </header>
     {/* Hero Section */}

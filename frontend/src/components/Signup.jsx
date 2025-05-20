@@ -17,12 +17,14 @@ const SignUp = () => {
           </span>
         </div>
         <nav className="hidden md:flex space-x-6 text-sm uppercase font-medium">
-          <a href="#">Home</a>
+          <Link to="/">Home</Link>
           <a href="#">Sellers</a>
           <a href="#">Products</a>
-          <a href="#">About</a>
+          <Link to="/About">About</Link>
           <a href="/admin">Admin</a>
+          <Link to="/Login">Login</Link>
         </nav>
+        
         <div className="flex items-center space-x-4">
           <Search className="w-5 h-5" />
           <ShoppingCart className="w-5 h-5" />

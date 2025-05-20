@@ -16,10 +16,10 @@ const Login = () => {
           </span>
         </div>
         <nav className="hidden md:flex space-x-6 text-sm uppercase font-medium">
-          <a href="#">Home</a>
+            <Link to="/">Home</Link>
           <a href="#">Sellers</a>
           <a href="#">Products</a>
-          <a href="#">About</a>
+          <Link to="/About">About</Link>
           <a href="/admin">Admin</a>
         </nav>
         <div className="flex items-center space-x-4">

@@ -20,17 +20,7 @@ const UserSchema = new Schema(
             required: true,
         },
         
-        phone: {
-            type: String,
-            required: true,
-        },
-        address:{
-            type: String,
-            required: true,
-        },
-        refreshToken: {
-            type: String,
-        },
+        
     },
     {
         timestamps: true,

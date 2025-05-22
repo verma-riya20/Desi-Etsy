@@ -5,14 +5,14 @@ import { Link } from 'react-router-dom';
 const Home = () => {
   return (
     <div className="bg-[#F4F3EE] text-[#1B1B1B] font-serif min-h-screen">
-    {/* Navbar */}
+    
     <header className="flex items-center justify-between px-6 py-4 border-b border-gray-300">
-        {/* Logo */}
+       
         <div className="flex items-center space-x-2">
             <span className="text-3xl font-extrabold tracking-widest text-[#B68973] drop-shadow-sm select-none" style={{ letterSpacing: '0.2em', fontFamily: 'serif' }}>
                 KARIGARHAAT
             </span>
-            {/* You can add an icon or SVG here for extra logo effect if desired */}
+          
         </div>
         <nav className="hidden md:flex space-x-6 text-sm uppercase font-medium">
             <a href="#">Home</a>
@@ -20,7 +20,7 @@ const Home = () => {
             <a href="#">Products</a>
             <Link to="/About">About</Link>
             <a href="/admin">Admin</a>
-            <a href="/Login">login</a>
+           
         </nav>
         <div className="flex items-center space-x-4">
             <Search className="w-5 h-5" />
@@ -33,7 +33,7 @@ const Home = () => {
             </Link>
         </div>
     </header>
-    {/* Hero Section */}
+ 
       <section className="grid md:grid-cols-2 gap-6 p-6 md:p-12 items-center">
         <img
           src="/artisan.jpg" 
@@ -59,7 +59,7 @@ const Home = () => {
         </div>
       </section>
 
-    {/* Mid Image Banner */}
+   
     <section className="p-6 md:p-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <img
@@ -75,7 +75,7 @@ const Home = () => {
         </div>
     </section>
 
-    {/* Features Section */}
+   
       <section className="grid md:grid-cols-2 gap-6 p-6 md:p-12 items-start">
         <div className="space-y-4">
          

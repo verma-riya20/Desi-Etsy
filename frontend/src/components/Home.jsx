@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import { Menu, ShoppingCart } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";  // <-- added useNavigate
+import { Menu, ShoppingCart, Search } from "lucide-react"; // <-- added Search import
+import { Link, useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const [query, setQuery] = useState("");      // search input state
-  const navigate = useNavigate();               // to programmatically navigate
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
 
   const handleSearch = () => {
     if (query.trim() !== "") {
-      // Redirect to /search page with query param
       navigate(`/search?query=${encodeURIComponent(query)}`);
     }
   };
@@ -45,11 +44,16 @@ const Home = () => {
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search products..."
             className="px-2 py-1 border rounded-md text-sm"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearch();
+              }
+            }}
           />
-          {/* Search icon button 
+          {/* Search icon button */}
           <button onClick={handleSearch} aria-label="Search">
-            <Search className="w-5 h-5 text-gray-800" />
-          </button>*/}
+            <Search className="w-5 h-5 text-gray-800 cursor-pointer" />
+          </button>
 
           <ShoppingCart className="w-5 h-5" />
           <Menu className="md:hidden w-5 h-5" />

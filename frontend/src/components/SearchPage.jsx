@@ -1,37 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
+const products = [
+  { id: 1, name: "Handmade Pottery" },
+  { id: 2, name: "Woven Basket" },
+  { id: 3, name: "Wooden Carving" },
+];
+
+// Helper hook to read query params
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 const SearchPage = () => {
-  const search = new URLSearchParams(useLocation().search);
-  const query = search.get("query");
+  const query = useQuery().get("query") || "";
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
-  // Dummy data — replace this with your real product data or API call
-  const products = [
-    { id: 1, name: "Handmade Wooden Vase" },
-    { id: 2, name: "Clay Pot" },
-    { id: 3, name: "Wool Scarf" },
-  ];
-
-  const filtered = products.filter((product) =>
-    product.name.toLowerCase().includes(query?.toLowerCase())
-  );
+  useEffect(() => {
+    const results = products.filter((product) =>
+      product.name.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredProducts(results);
+  }, [query]);
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4">
-        Results for "{query}"
-      </h2>
-      <div className="grid gap-4">
-        {filtered.length > 0 ? (
-          filtered.map((p) => (
-            <div key={p.id} className="border p-4 rounded shadow">
-              {p.name}
-            </div>
-          ))
-        ) : (
-          <p>No products found.</p>
-        )}
-      </div>
+      <h1 className="text-2xl mb-4">Search Results for "{query}"</h1>
+
+      {filteredProducts.length > 0 ? (
+        <ul>
+          {filteredProducts.map((product) => (
+            <li key={product.id} className="mb-2">
+              {product.name}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-red-600 font-semibold">No items found.</p>
+      )}
     </div>
   );
 };

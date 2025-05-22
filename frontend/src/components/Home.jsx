@@ -32,7 +32,7 @@ const Home = () => {
           <a href="#">Products</a>
           <Link to="/About">About</Link>
           <a href="/admin">Admin</a>
-          <a href="/Login">login</a>
+         
         </nav>
 
         {/* SEARCH INPUT + ICON + CART + MENU + SIGNUP BUTTON */}

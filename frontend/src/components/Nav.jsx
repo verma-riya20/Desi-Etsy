@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import '../CSS/Nav.css';
+
 
 const Nav = () => {
     return (
@@ -10,6 +10,9 @@ const Nav = () => {
                 <ul className="nav-links">
                     <li>
                         <Link to="/" className="nav-item">Home</Link>
+                    </li>
+                    <li>
+                        <Link to="/Products" className="nav-item">ProductPage</Link>
                     </li>
                     <li>
                         <Link to="/Signup" className="nav-item">Signup</Link>
@@ -22,5 +25,8 @@ const Nav = () => {
         </div>
     );
 };
+
+
+
 
 export default Nav;

@@ -9,6 +9,7 @@ import AdminDashboard from "./components/AdminPanel/AdminDashboard.jsx";
 import RegisterArtisan from "./components/RegisterArtisan.jsx";
 import uploadProduct from "./components/uploadProduct.jsx";
 import About from "./components/About.jsx";
+import SearchPage from "./components/SearchPage.jsx";
 const App=()=>{
     return(
         <div>
@@ -23,6 +24,7 @@ const App=()=>{
                 <Route path="/Signup" element={<Signup/>}></Route>
                 <Route path="/Login" element={<Login/>}></Route>
                 <Route path="/About" element={<About/>}></Route>
+                <Route path="/search" element={<SearchPage />}></Route>
             </Routes>
             </BrowserRouter>
         </div>

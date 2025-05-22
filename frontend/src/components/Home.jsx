@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Menu, ShoppingCart, Search } from "lucide-react"; // <-- added Search import
+import { Menu, ShoppingCart } from "lucide-react"; // <-- added Search import
 import { Link, useNavigate } from "react-router-dom";
 
 const Home = () => {
@@ -50,10 +50,10 @@ const Home = () => {
               }
             }}
           />
-          {/* Search icon button */}
+          {/* Search icon button 
           <button onClick={handleSearch} aria-label="Search">
             <Search className="w-5 h-5 text-gray-800 cursor-pointer" />
-          </button>
+          </button>*/}
 
           <ShoppingCart className="w-5 h-5" />
           <Menu className="md:hidden w-5 h-5" />

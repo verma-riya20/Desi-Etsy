@@ -1,12 +1,43 @@
-import React from "react";
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+
+  // Update form state
+  const handleChange = (e) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/v1/users/login",
+        { ...formData },
+        {
+          withCredentials: true, // allows cookies to be sent
+        }
+      );
+
+      if (response.data.success) {
+        navigate("/"); // Redirect on success
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || "Login failed. Try again.");
+    }
+  };
+
   return (
     <div className="bg-[#F4F3EE] text-[#1B1B1B] font-serif min-h-screen">
-      {/* Navbar */}
+      
       <header className="flex items-center justify-between px-6 py-4 border-b border-gray-300">
-        {/* Logo */}
         <div className="flex items-center space-x-2">
           <span
             className="text-3xl font-extrabold tracking-widest text-[#B68973] drop-shadow-sm select-none"
@@ -16,7 +47,7 @@ const Login = () => {
           </span>
         </div>
         <nav className="hidden md:flex space-x-6 text-sm uppercase font-medium">
-            <Link to="/">Home</Link>
+          <Link to="/">Home</Link>
           <a href="#">Sellers</a>
           <a href="#">Products</a>
           <Link to="/About">About</Link>
@@ -31,13 +62,20 @@ const Login = () => {
         </div>
       </header>
 
-      {/* Login Form Section */}
+      
       <section className="p-6 md:p-12 flex justify-center items-center">
         <div className="bg-white p-8 rounded-md shadow-lg w-full md:w-[400px]">
           <h2 className="text-2xl font-semibold mb-4 text-center">Login to Your Account</h2>
 
-          <form>
-            {/* Email */}
+          
+          {error && (
+            <div className="mb-4 text-red-600 text-sm text-center font-medium">
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit}>
+            
             <div className="mb-4">
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email Address
@@ -47,11 +85,13 @@ const Login = () => {
                 id="email"
                 name="email"
                 required
+                value={formData.email}
+                onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md mt-2"
               />
             </div>
 
-            {/* Password */}
+            
             <div className="mb-4">
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Password
@@ -61,11 +101,13 @@ const Login = () => {
                 id="password"
                 name="password"
                 required
+                value={formData.password}
+                onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md mt-2"
               />
             </div>
 
-            {/* Submit Button */}
+            
             <button
               type="submit"
               className="w-full bg-[#B68973] text-white py-2 px-4 rounded-md font-semibold hover:bg-[#9f7a56] transition"
@@ -74,7 +116,7 @@ const Login = () => {
             </button>
           </form>
 
-          {/* Link to SignUp Page */}
+          
           <div className="mt-4 text-center">
             <p className="text-sm text-gray-600">
               Don't have an account?{" "}

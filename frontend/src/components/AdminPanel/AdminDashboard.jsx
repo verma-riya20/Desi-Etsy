@@ -3,22 +3,18 @@ import axios from 'axios';
 
 export default function AdminDashboard() {
   const [artisans, setArtisans] = useState([]);
-  const [products, setProducts] = useState([]); // Assuming you'll fetch pending products later
+  const [products, setProducts] = useState([]);
   const [loadingArtisans, setLoadingArtisans] = useState(true);
   const [loadingProducts, setLoadingProducts] = useState(true);
   const [errorArtisans, setErrorArtisans] = useState(null);
   const [errorProducts, setErrorProducts] = useState(null);
 
-  // Function to fetch pending artisans
+  // Fetch pending artisans
   const fetchPendingArtisans = useCallback(async () => {
     setLoadingArtisans(true);
     setErrorArtisans(null);
     try {
       const res = await axios.get('http://localhost:5000/api/admin/pending-artisans');
-      // --- ADDED CONSOLE LOG HERE ---
-      console.log('Fetched pending artisans data:', res.data);
-      // --- END CONSOLE LOG ---
-      // Ensure res.data is an array or default to empty array
       const data = Array.isArray(res.data) ? res.data : [];
       setArtisans(data);
     } catch (err) {
@@ -30,63 +26,66 @@ export default function AdminDashboard() {
     }
   }, []);
 
-  // Function to fetch pending products (placeholder for now)
+  // Fetch pending products
   const fetchPendingProducts = useCallback(async () => {
     setLoadingProducts(true);
     setErrorProducts(null);
     try {
-      // You'll need to create a backend endpoint for pending products similar to artisans
-      // For now, let's simulate no products or an empty array
-      // const res = await axios.get('http://localhost:5000/api/admin/pending-products');
-      // setProducts(Array.isArray(res.data) ? res.data : []);
-      setProducts([]); // No backend for products yet, so set to empty
+      const res = await axios.get('http://localhost:5000/api/admin/pending-products');
+      const data = Array.isArray(res.data) ? res.data : [];
+      setProducts(data);
     } catch (err) {
       console.error('Error fetching products:', err);
-      setErrorProducts('Failed to fetch pending products. (Backend endpoint not yet implemented)');
+      setErrorProducts('Failed to fetch pending products.');
       setProducts([]);
     } finally {
       setLoadingProducts(false);
     }
   }, []);
 
-
   useEffect(() => {
     fetchPendingArtisans();
-    fetchPendingProducts(); // Call the product fetching function
-  }, [fetchPendingArtisans, fetchPendingProducts]); // Re-run when these functions change (which they won't, due to useCallback)
+    fetchPendingProducts();
+  }, [fetchPendingArtisans, fetchPendingProducts]);
 
   const approveArtisan = async (id) => {
     try {
       await axios.put(`http://localhost:5000/api/admin/approve-artisan/${id}`);
-      // Re-fetch the list to ensure the UI is up-to-date after approval
       fetchPendingArtisans();
     } catch (err) {
       console.error('Error approving artisan:', err);
-      alert('Failed to approve artisan.'); // Consider replacing with a custom modal
+      alert('Failed to approve artisan.');
     }
   };
 
   const rejectArtisan = async (id) => {
     try {
       await axios.put(`http://localhost:5000/api/admin/reject-artisan/${id}`);
-      // Re-fetch the list to ensure the UI is up-to-date after rejection
       fetchPendingArtisans();
     } catch (err) {
       console.error('Error rejecting artisan:', err);
-      alert('Failed to reject artisan.'); // Consider replacing with a custom modal
+      alert('Failed to reject artisan.');
     }
   };
 
   const approveProduct = async (id) => {
     try {
-      // You'll need a backend endpoint for this
-      // await axios.put(`http://localhost:5000/api/admin/approve-product/${id}`);
-      // fetchPendingProducts();
-      console.log(`Approving product with ID: ${id}`);
-      alert('Product approval functionality not yet fully implemented on backend.'); // Placeholder
+      await axios.put(`http://localhost:5000/api/product/approve/${id}`);
+
+      fetchPendingProducts();
     } catch (err) {
       console.error('Error approving product:', err);
       alert('Failed to approve product.');
+    }
+  };
+
+  const rejectProduct = async (id) => {
+    try {
+      await axios.put(`http://localhost:5000/api/admin/reject-product/${id}`);
+      fetchPendingProducts();
+    } catch (err) {
+      console.error('Error rejecting product:', err);
+      alert('Failed to reject product.');
     }
   };
 
@@ -94,6 +93,7 @@ export default function AdminDashboard() {
     <div className="p-6 bg-gray-50 min-h-screen font-inter">
       <h1 className="text-4xl font-extrabold mb-8 text-center text-gray-800">Admin Dashboard</h1>
 
+      {/* Artisan Approval Section */}
       <section className="mb-12 bg-white rounded-xl shadow-lg p-6">
         <h2 className="text-2xl font-bold mb-5 text-gray-700">Pending Artisan Approvals</h2>
         {loadingArtisans && <p className="text-center text-blue-600">Loading pending artisans...</p>}
@@ -152,6 +152,7 @@ export default function AdminDashboard() {
         )}
       </section>
 
+      {/* Product Approval Section */}
       <section className="bg-white rounded-xl shadow-lg p-6">
         <h2 className="text-2xl font-bold mb-5 text-gray-700">Pending Product Approvals</h2>
         {loadingProducts && <p className="text-center text-blue-600">Loading pending products...</p>}
@@ -164,7 +165,7 @@ export default function AdminDashboard() {
               <thead className="bg-gray-100">
                 <tr>
                   <th className="py-3 px-4 text-left text-sm font-semibold text-gray-600 border-b">Product</th>
-                  <th className="py-3 px-4 text-left text-sm font-semibold text-gray-600 border-b">Seller</th>
+                  <th className="py-3 px-4 text-left text-sm font-semibold text-gray-600 border-b">Artisan</th>
                   <th className="py-3 px-4 text-left text-sm font-semibold text-gray-600 border-b">Actions</th>
                 </tr>
               </thead>
@@ -172,13 +173,19 @@ export default function AdminDashboard() {
                 {products.map(product => (
                   <tr key={product._id} className="hover:bg-gray-50 transition-colors duration-200">
                     <td className="py-3 px-4 border-b text-gray-800">{product.name}</td>
-                    <td className="py-3 px-4 border-b text-gray-800">{product.artisanId?.name || 'Unknown'}</td>
-                    <td className="py-3 px-4 border-b">
+                    <td className="py-3 px-4 border-b text-gray-800">{product.artisan?.name || 'Unknown'}</td>
+                    <td className="py-3 px-4 border-b space-x-2">
                       <button
                         onClick={() => approveProduct(product._id)}
                         className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-all duration-200 transform hover:scale-105"
                       >
                         Approve
+                      </button>
+                      <button
+                        onClick={() => rejectProduct(product._id)}
+                        className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-all duration-200 transform hover:scale-105"
+                      >
+                        Reject
                       </button>
                     </td>
                   </tr>

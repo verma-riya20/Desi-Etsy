@@ -7,6 +7,15 @@ app.use(cors({
   credentials: true, // if you're using cookies or sessions
 }));
 
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// ✅ Serve uploaded images at /uploads
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+
 app.use(express.json({limit:"16 kb"}))
 app.use(express.urlencoded({extended:true,limit:"16 kb"}))
 app.use(express.static("public"))

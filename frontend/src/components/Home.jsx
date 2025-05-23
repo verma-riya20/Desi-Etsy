@@ -28,7 +28,7 @@ const Home = () => {
 
         <nav className="hidden md:flex space-x-6 text-sm uppercase font-medium">
           <a href="#">Home</a>
-          <a href="#">Sellers</a>
+          <a href="seller-cards">Sellers</a>
           <a href="/Products">Products</a>
           <Link to="/About">About</Link>
           <a href="/admin">Admin</a>

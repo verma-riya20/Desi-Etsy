@@ -8,9 +8,10 @@ import Signup from "./components/Signup.jsx";
 import Login from "./components/Login.jsx";
 import AdminDashboard from "./components/AdminPanel/AdminDashboard.jsx";
 import RegisterArtisan from "./components/RegisterArtisan.jsx";
-import uploadProduct from "./components/uploadProduct.jsx";
+import UploadProduct from "./components/UploadProduct.jsx";
 import About from "./components/About.jsx";
 import SearchPage from "./components/SearchPage.jsx";
+import SellerCards from "./components/SellerCards.jsx";
 const App=()=>{
     return(
         <div>
@@ -20,9 +21,10 @@ const App=()=>{
                 <Route path="/" element={<Home/>}></Route>
                 <Route path="/admin" element={<AdminDashboard/>}></Route>
                 <Route path="/seller" element={<RegisterArtisan/>}></Route>
-                <Route path="/upload-product" element={<uploadProduct/>}></Route>
+                <Route path="/upload" element={<UploadProduct/>}></Route>
 
                 <Route path="/Products" element={<ProductPage />}></Route>
+                <Route path="/seller-cards" element={<SellerCards />}></Route>
                
                 <Route path="/Signup" element={<Signup/>}></Route>
                 <Route path="/Login" element={<Login/>}></Route>

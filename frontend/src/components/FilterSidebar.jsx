@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const FilterSidebar = ({ onFilter }) => {
+const FilterSidebar = ({ onFilter, onSort }) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [priceRange, setPriceRange] = useState([1, 10000]);
 
@@ -18,11 +18,28 @@ const FilterSidebar = ({ onFilter }) => {
     onFilter({ category: selectedCategories, priceRange: [1, value] });
   };
 
-  return (
-    <div className="w-64 p-4 border-r border-gray-300 bg-white">
-      <h2 className="text-xl font-bold mb-4">Filters</h2>
+  const handleSortChange = (e) => {
+    onSort(e.target.value);
+  };
 
-      <div className="mb-6">
+  return (
+    <div className="w-64 p-4 border-r border-gray-300 bg-white space-y-6">
+      <h2 className="text-xl font-bold mb-2">Filters</h2>
+
+      <div>
+        <h3 className="font-semibold mb-2">Sort By</h3>
+        <select
+          onChange={handleSortChange}
+          className="w-full p-2 border rounded-md"
+        >
+          <option value="">Default</option>
+          <option value="priceLow">Price: Low to High</option>
+          <option value="priceHigh">Price: High to Low</option>
+          <option value="ratingHigh">Rating: High to Low</option>
+        </select>
+      </div>
+
+      <div>
         <h3 className="font-semibold mb-2">Category</h3>
         {["Jewellery", "Bags", "Wall Hangings", "Home Decor", "Kitchenware"].map(cat => (
           <label key={cat} className="block mb-1">
@@ -36,7 +53,7 @@ const FilterSidebar = ({ onFilter }) => {
         ))}
       </div>
 
-      <div className="mb-6">
+      <div>
         <h3 className="font-semibold mb-2">Price Range: ₹1 – ₹{priceRange[1]}</h3>
         <input
           type="range"

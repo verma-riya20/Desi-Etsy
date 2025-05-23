@@ -40,3 +40,12 @@ export const rejectArtisan = async (req, res) => {
     res.status(500).json({ error: 'Rejection failed' });
   }
 };
+
+export const getApprovedArtisans = async (req, res) => {  
+  try {
+    const artisans = await Artisan.find({ status: 'approved' });
+    res.json(artisans);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch approved artisans' });
+  }
+}

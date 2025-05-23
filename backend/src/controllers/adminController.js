@@ -25,3 +25,11 @@ export const verifyArtisan = async (req, res) => {
     res.status(500).json({ error: 'Verification failed' });
   }
 };
+export const getApprovedArtisans = async (req, res) => {
+  try {
+    const artisans = await Artisan.find({ isVerified: true });
+    res.json(artisans);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch approved artisans' });
+  }
+}

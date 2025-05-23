@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Nav from "./Nav";
+
 import FilterSidebar from "./FilterSidebar";
 import ProductCard from "./ProductCard";
 
@@ -138,7 +138,7 @@ const ProductPage = () => {
 
   return (
     <div className="bg-[#FAF7F2] text-[#1B1B1B] min-h-screen">
-      <Nav />
+      
       <div className="flex">
         <FilterSidebar onFilter={handleFilter} />
 

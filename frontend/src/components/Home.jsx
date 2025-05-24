@@ -55,7 +55,10 @@ const Home = () => {
             <Search className="w-5 h-5 text-gray-800 cursor-pointer" />
           </button>*/}
 
-          <ShoppingCart className="w-5 h-5" />
+         <Link to="/cart">
+        <ShoppingCart className="w-5 h-5 cursor-pointer hover:text-green-600 transition" />
+        </Link>
+
           <Menu className="md:hidden w-5 h-5" />
           <Link to="/Signup">
             <button className="ml-4 px-4 py-1 border border-gray-900 text-sm font-medium hover:bg-gray-900 hover:text-white transition">

@@ -12,6 +12,8 @@ import UploadProduct from "./components/UploadProduct.jsx";
 import About from "./components/About.jsx";
 import SearchPage from "./components/SearchPage.jsx";
 import SellerCards from "./components/SellerCards.jsx";
+import Cart from "./components/Cart.jsx";
+import Address from "./components/Address.jsx";
 const App=()=>{
     return(
         <div>
@@ -25,6 +27,8 @@ const App=()=>{
 
                 <Route path="/Products" element={<ProductPage />}></Route>
                 <Route path="/seller-cards" element={<SellerCards />}></Route>
+                <Route path="/cart" element={<Cart />}></Route>
+                <Route path="/address" element={<Address />}></Route>
                
                 <Route path="/Signup" element={<Signup/>}></Route>
                 <Route path="/Login" element={<Login/>}></Route>

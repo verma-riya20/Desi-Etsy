@@ -27,6 +27,8 @@ const Login = () => {
       );
 
       if (response.data.success) {
+         // ✅ Save the token to localStorage
+      localStorage.setItem('token', response.data.data.accessToken);
         navigate("/"); // Redirect on success
       }
     } catch (err) {

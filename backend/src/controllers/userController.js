@@ -49,6 +49,8 @@ const registerUser = async (req, res) => {
 };
 
 // Login User
+
+
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -68,23 +70,34 @@ const loginUser = async (req, res) => {
     }
 
     const { accessToken, refreshToken } = await generateaccesandrefreshtoken(user._id);
+
     const loggedInUser = await User.findById(user._id).select("-password -refreshToken");
 
-    const options = { httpOnly: true, secure: true };
+    // Set token in secure cookies
+    const options = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Strict",
+    };
 
     return res
       .status(200)
       .cookie("accessToken", accessToken, options)
-      .cookie("refreshToken", refreshToken)
+      .cookie("refreshToken", refreshToken, options)
       .json({
         success: true,
         message: "User logged in",
-        data: { user: loggedInUser, accessToken, refreshToken }
+        data: {
+          user: loggedInUser,
+          accessToken, // so frontend can optionally store in localStorage
+          refreshToken
+        }
       });
   } catch (error) {
     return res.status(500).json({ success: false, message: error?.message || "Login failed" });
   }
 };
+
 
 // Logout User
 const logoutUser = async (req, res) => {

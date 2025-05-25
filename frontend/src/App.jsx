@@ -14,6 +14,7 @@ import SearchPage from "./components/SearchPage.jsx";
 import SellerCards from "./components/SellerCards.jsx";
 import Cart from "./components/Cart.jsx";
 import Address from "./components/Address.jsx";
+import Payment from "./components/Payment.jsx";
 const App=()=>{
     return(
         <div>
@@ -29,6 +30,7 @@ const App=()=>{
                 <Route path="/seller-cards" element={<SellerCards />}></Route>
                 <Route path="/cart" element={<Cart />}></Route>
                 <Route path="/address" element={<Address />}></Route>
+                 <Route path="/payment" element={<Payment />} />
                
                 <Route path="/Signup" element={<Signup/>}></Route>
                 <Route path="/Login" element={<Login/>}></Route>

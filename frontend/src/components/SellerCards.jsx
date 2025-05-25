@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // for navigation
 
 const SellerCards = () => {
   const [sellers, setSellers] = useState([]);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchSellers = async () => {
@@ -23,6 +25,16 @@ const SellerCards = () => {
     fetchSellers();
   }, []);
 
+  const handleUploadClick = (seller) => {
+    // Navigate to upload product page with seller details (optional: pass as state)
+    navigate('/upload', {
+      state: {
+        artisanName: seller.name,
+        artisanEmail: seller.email,
+      },
+    });
+  };
+
   if (error) return <p className="text-red-500 text-center">{error}</p>;
 
   return (
@@ -32,7 +44,7 @@ const SellerCards = () => {
         {sellers.map((seller) => (
           <div key={seller._id} className="bg-white shadow-md rounded-lg overflow-hidden">
             <img
-              src={seller.imageUrl || 'https://via.placeholder.com/300'}
+              src={`http://localhost:5000/uploads/${seller.image}` || 'https://via.placeholder.com/300'}
               alt={seller.name}
               className="w-full h-48 object-cover"
             />
@@ -49,6 +61,12 @@ const SellerCards = () => {
                   View Portfolio
                 </a>
               )}
+              <button
+                onClick={() => handleUploadClick(seller)}
+                className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+              >
+                Upload Product
+              </button>
             </div>
           </div>
         ))}

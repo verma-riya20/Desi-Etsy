@@ -111,10 +111,16 @@ export const updateCart = async (req, res) => {
     const cart = await Cart.findOne({ userId: req.user.id });
     if (!cart) return res.status(404).json({ message: "Cart not found" });
 
-    const item = cart.items.find(item => item.productId.equals(productId));
-    if (!item) return res.status(404).json({ message: "Product not in cart" });
+    if (quantity === 0) {
+      // Remove the item from cart if quantity is 0
+      cart.items = cart.items.filter(item => !item.productId.equals(productId));
+    } else {
+      // Update quantity if > 0
+      const item = cart.items.find(item => item.productId.equals(productId));
+      if (!item) return res.status(404).json({ message: "Product not in cart" });
+      item.quantity = quantity;
+    }
 
-    item.quantity = quantity;  // set new quantity
     await cart.save();
 
     const updatedCart = await Cart.findOne({ userId: req.user.id }).populate('items.productId');

@@ -1,15 +1,29 @@
-import React, { useState } from "react";
-import { Menu, ShoppingCart } from "lucide-react"; // <-- added Search import
+import React, { useState, useEffect } from "react";
+import { Menu, ShoppingCart } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [query, setQuery] = useState("");
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      setUser(JSON.parse(userData));
+    }
+  }, []);
 
   const handleSearch = () => {
     if (query.trim() !== "") {
       navigate(`/search?query=${encodeURIComponent(query)}`);
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.reload(); // or navigate("/");
   };
 
   return (
@@ -32,12 +46,10 @@ const Home = () => {
           <a href="/Products">Products</a>
           <Link to="/About">About</Link>
           <a href="/admin">Admin</a>
-         
         </nav>
 
-        {/* SEARCH INPUT + ICON + CART + MENU + SIGNUP BUTTON */}
+        {/* SEARCH INPUT + ICON + CART + MENU + SIGNUP/USER INFO */}
         <div className="flex items-center space-x-4">
-          {/* Search input */}
           <input
             type="text"
             value={query}
@@ -50,21 +62,38 @@ const Home = () => {
               }
             }}
           />
-          {/* Search icon button 
-          <button onClick={handleSearch} aria-label="Search">
-            <Search className="w-5 h-5 text-gray-800 cursor-pointer" />
-          </button>*/}
 
-         <Link to="/cart">
-        <ShoppingCart className="w-5 h-5 cursor-pointer hover:text-green-600 transition" />
-        </Link>
+          <Link to="/cart">
+            <ShoppingCart className="w-5 h-5 cursor-pointer hover:text-green-600 transition" />
+          </Link>
 
           <Menu className="md:hidden w-5 h-5" />
-          <Link to="/Signup">
-            <button className="ml-4 px-4 py-1 border border-gray-900 text-sm font-medium hover:bg-gray-900 hover:text-white transition">
-              SignUp
-            </button>
-          </Link>
+
+          {user ? (
+            <div className="flex items-center space-x-3">
+          <span className="font-serif text-[#1B1B1B] text-sm font-semibold">
+  Welcome,{" "}
+  <span className="text-[#B68973] font-bold">
+    {user.fullname.split(" ")[0]}
+  </span>
+</span>
+
+
+
+              <button
+                onClick={handleLogout}
+                className="px-3 py-1 border border-red-500 text-red-500 text-sm hover:bg-red-500 hover:text-white transition"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Link to="/Signup">
+              <button className="ml-4 px-4 py-1 border border-gray-900 text-sm font-medium hover:bg-gray-900 hover:text-white transition">
+                SignUp
+              </button>
+            </Link>
+          )}
         </div>
       </header>
 
@@ -143,7 +172,10 @@ const Home = () => {
             community.
           </p>
           <button className="mt-2 px-6 py-2 border border-gray-900 text-sm hover:bg-gray-900 hover:text-white transition w-max">
-            Explore Marketplace
+            
+            <Link to="/Products" className="block w-full h-full">
+              Explore Marketplace..
+            </Link>
           </button>
         </div>
       </section>

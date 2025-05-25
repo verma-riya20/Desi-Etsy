@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import {
-  addToCartAPI,
   clearCartAPI,
   updateCartItemQuantityAPI,
   setCartItems,
@@ -44,8 +43,12 @@ export default function Cart() {
   };
 
   const handleQuantityChange = (productId, newQuantity) => {
-    if (newQuantity < 1) return; // optional: prevent quantity below 1
+    if (newQuantity < 1) return;
     dispatch(updateCartItemQuantityAPI({ productId, quantity: newQuantity }));
+  };
+
+  const handleRemove = (productId) => {
+    dispatch(updateCartItemQuantityAPI({ productId, quantity: 0 }));
   };
 
   return (
@@ -68,6 +71,13 @@ export default function Cart() {
               </tr>
             </thead>
             <tbody>
+              {cartItems.length === 0 && (
+                <tr>
+                  <td colSpan="5" className="text-center py-10 text-gray-500">
+                    Your cart is empty.
+                  </td>
+                </tr>
+              )}
               {cartItems.map((item) => (
                 <tr
                   key={item._id || item.id}
@@ -76,9 +86,9 @@ export default function Cart() {
                   <td className="py-4">
                     <div className="flex items-center gap-6">
                       <img
-                        src={item.image}
+                        src={`http://localhost:5000/uploads/${item.image}`}
                         alt={item.name}
-                        className="w-24 h-24 rounded-xl object-cover border"
+                        className="h-40 w-full object-cover rounded-xl"
                       />
                       <div>
                         <p className="font-medium text-lg text-gray-800">{item.name}</p>
@@ -90,14 +100,18 @@ export default function Cart() {
                   <td className="py-4">
                     <div className="flex items-center gap-2">
                       <button
-                        onClick={() => handleQuantityChange(item._id || item.id, item.quantity - 1)}
+                        onClick={() =>
+                          handleQuantityChange(item._id || item.id, item.quantity - 1)
+                        }
                         className="px-2 py-1 border rounded hover:bg-gray-200"
                       >
                         -
                       </button>
                       <span className="px-4 font-medium">{item.quantity}</span>
                       <button
-                        onClick={() => handleQuantityChange(item._id || item.id, item.quantity + 1)}
+                        onClick={() =>
+                          handleQuantityChange(item._id || item.id, item.quantity + 1)
+                        }
                         className="px-2 py-1 border rounded hover:bg-gray-200"
                       >
                         +
@@ -107,7 +121,7 @@ export default function Cart() {
                   <td className="py-4 font-medium text-md">₹{item.price * item.quantity}</td>
                   <td className="py-4">
                     <button
-                      onClick={() => handleQuantityChange(item._id || item.id, 0)}
+                      onClick={() => handleRemove(item._id || item.id)}
                       className="text-red-500 hover:underline"
                     >
                       Remove
@@ -115,13 +129,6 @@ export default function Cart() {
                   </td>
                 </tr>
               ))}
-              {cartItems.length === 0 && (
-                <tr>
-                  <td colSpan="5" className="text-center py-10 text-gray-500">
-                    Your cart is empty.
-                  </td>
-                </tr>
-              )}
             </tbody>
           </table>
         </div>
